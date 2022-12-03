@@ -1,13 +1,19 @@
 from src.algorithms.heuristics_greedy import main_heuristics_greedy
 from src.algorithms.heuristics_mthm import main_heuristics_mthm
+from src.algorithms.heuristics_genetic import main_heuristics_genetic
 from data.data_generate import get_data
 
 def execute_option(option):
+    if option == '' or option == '4':
+        return
+    if option == '3':
+        main_heuristics_genetic()
+        return
+
     use_default_dataset = False
     use_default_syntetic_dataset = False
-    if option == '3' or option == '':
-        return
     number_patients = 80
+
     try:                            
         number_patients = int(input('Input the number of patients(default=80):'))
         print() 
@@ -15,7 +21,6 @@ def execute_option(option):
         number_patients = 80
         print() 
 
-    print('number_patients',number_patients)
     default_syntenthic = [200, 500, 1000, 5000, 10000]
     use_default_dataset = number_patients == 80
 
@@ -34,14 +39,15 @@ def execute_option(option):
 
 def prompt_main_menu():
     option = ''
-    while(option != '3'):
+    while(option != '4'):
         option = ''
         print('\n...........................')
         print('MMS Schedule solver')
         print('...........................')
         print('1. Solve using greedy heuristic')
         print('2. Solve using mthm heuristic')
-        print('3. Exit')
+        print('3. Solve using genetic heuristic')
+        print('4. Exit')
         option = input("")
         execute_option(option)
     

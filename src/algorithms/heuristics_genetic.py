@@ -88,17 +88,12 @@ class Simulacion():
         self.promedio=sum(retrazos)/len(retrazos)
 
                 
-    
-
-###SIMULACION DE ASIGNACIONES INICIALES
-prom=[]
-for x in range(10**2):
-    r=AsignacionesIniciales() #Creamos cirugias, asignamos a quirofanos
-    t=Simulacion(r.quirofanos,r.ListaCirugias) #simulamos con asignaciones iniciales
-    prom.append((t.promedio))
-print("RESULTADO: El promedio de demora con las asignaciones iniciales es")
-print(sum(prom)/len(prom))
-
-
-
-
+def main_heuristics_genetic(): 
+    ###SIMULACION DE ASIGNACIONES INICIALES
+    prom=[]
+    for x in range(10**2):
+        r=AsignacionesIniciales() #Creamos cirugias, asignamos a quirofanos
+        t=Simulacion(r.quirofanos,r.ListaCirugias) #simulamos con asignaciones iniciales
+        prom.append((t.promedio))
+    print("RESULTADO: El promedio de demora con las asignaciones iniciales es")
+    print(sum(prom)/len(prom))
