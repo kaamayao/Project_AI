@@ -70,6 +70,7 @@ class Simulacion():
         self.AsignacionesQuirofanos=AsignacionesQuirofanos
         self.ListaCirugias=ListaCirugias
         self.simular()
+        
     def simular(self):
         retrazos=[]
         for x in self.AsignacionesQuirofanos:
@@ -83,17 +84,87 @@ class Simulacion():
                     if retrazo>0:
                         RetrazoTotal+=retrazo
             retrazos.append(RetrazoTotal)
-        print(retrazos,"####")
-        print("promedio=",sum(retrazos)/len(retrazos))
+        self.retrazos=retrazos
+        #print(retrazos,"####")
+        #print("promedio=",sum(retrazos)/len(retrazos))
         self.promedio=sum(retrazos)/len(retrazos)
+    def darwin(self):
+        n=200#Numero de simulaciones
+        retrazos=[]
+        for x in range(n):
+            retrazos.append(self.retrazos)
+            self.simular()
+        #averiguamos que asignaciones a salas tienen mejores y peores desempeños
+        promedios=np.array([0.0,0.0,0.0,0.0,0.0,0.0])
+        for x in retrazos:
+            for y in range(6): #6 salas                
+                promedios[y]+=x[y]                
+        promedios=promedios/n        
+        #print(retrazos)
+        #print(promedios)
+        self.promedios0=promedios
+    def mutar(self,promedios):
+        k=promedios.copy()
+        k.sort()
+        for x in range(3,6):
+            for y in range(6):
+                if promedios[y]==k[x]:
+                    s=random.randint(0,len(self.AsignacionesQuirofanos[y])-1)
+                    cromosoma=self.AsignacionesQuirofanos[y].pop(s)
+                    insertar=random.randint(0,5)
+                    self.AsignacionesQuirofanos[insertar].append(cromosoma)
+    
+    def mesclar0(self):
+        self.hijos=[]
+        for x in range(6):
+            for y in range(x,6):
+                if x!=y:
+                    self.mesclar1(self.AsignacionesQuirofanos[x],self.AsignacionesQuirofanos[y])
+                    self.hijos.append(self.hijo2)
+                    self.hijos.append(self.hijo1)
+               
+    def mesclar1(self,a,b):
+        random.shuffle(a)
+        random.shuffle(b)
+        self.hijo1=a[:int(len(a)/2)]+b[int(len(b)/2):]
+        self.hijo2=a[int(len(a)/2):]+b[:int(len(b)/2)]
+        
+    def depredacion(self):
+        sobrevivientes=[]
+        self.AsignacionesQuirofanos=self.hijos
+        self.simular()
+        k=self.retrazos.copy()
+        k.sort()
+        for x in range(len(self.retrazos)):
+            for y in range(6):
+                if self.retrazos[x]==k[y]:
+                    sobrevivientes.append(self.AsignacionesQuirofanos[x])
+        self.AsignacionesQuirofanos=sobrevivientes
+        
+def main_heuristics_genetic():
+    print("SE REALIZAN 200 SIMULACIONES SOBRE CADA GENERACION PARA ESTIMAR EL TIEMPO PROMEDIO,")
+    r=AsignacionesIniciales() #Creamos cirugias, asignamos a quirofanos
+    t=Simulacion(r.quirofanos,r.ListaCirugias) #simulamos con asignacines iniciales
+    print("PROMEDIO RETRAZO TOTAL PRIMERA GENERACION=",t.promedio)
+    for x in range(4000): # Cada iteracion es una nueva generacion y una simulacion sobre como se desempeñaria.
+        t.darwin()
+        t.mutar(t.promedios0)
+        t.mesclar0()
+        t.depredacion()
+        print("GENERANCION=",x,"     ",t.promedio)
+        print(t.promedio)
 
-                
-def main_heuristics_genetic(): 
+
+    """
+
     ###SIMULACION DE ASIGNACIONES INICIALES
     prom=[]
-    for x in range(10**2):
+    for x in range(10**3):
+
         r=AsignacionesIniciales() #Creamos cirugias, asignamos a quirofanos
         t=Simulacion(r.quirofanos,r.ListaCirugias) #simulamos con asignaciones iniciales
         prom.append((t.promedio))
     print("RESULTADO: El promedio de demora con las asignaciones iniciales es")
     print(sum(prom)/len(prom))
+
+    """
