@@ -1,11 +1,12 @@
 # Project_AI (MSS Algorithms)
 
-Para ejecutar el código compartiva es requerido Python 3.9+ y poseer las librerias numpy y scpicy
+Para ejecutar el código compartiva es requerido <= Python 3.9 y poseer las librerias numpy y scpicy
 
 ## Instalar librerías:
 
     pip install numpy
     pip install spicy
+    pip install sdv
 
 ## Reproducir resultados del paper:
 
