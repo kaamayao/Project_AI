@@ -15,4 +15,4 @@ Para ejecutar el código de benchmarking:
 
     python main.py
 
-Para ejecutar cualquiera de los algorítmos expuestos se selecciona la opción en el menú (1,2 ó 3) y subsecuente se introduce el número de pacientes sobre el cual se desea experimentar (si aplicable). En caso de querer salir del programa ejecutar la opción 4
+Para ejecutar cualquiera de los algorítmos expuestos se selecciona la opción en el menú (1,2 ó 3) y después se introduce el número de pacientes sobre el cual se desea experimentar (si aplicable). En caso de querer salir del programa ejecutar la opción 4
