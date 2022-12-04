@@ -9,7 +9,7 @@ Para ejecutar el código compartiva es requerido Python 3.9+ y poseer las librer
 
 ## Reproducir resultados del paper:
 
-El código posee las bases de datos sintéticos usados en el experimento, los resultados pueden ser revisados al ejecutar el código con los valores dados en las tablas (80, 200, 500, 1000, 5000, 10000).
+El código posee las bases de datos sintéticos usados en el experimento, los resultados pueden ser revisados al ejecutar el código con los valores de pacientes dados en las tablas (80, 200, 500, 1000, 5000, 10000).
 
 Para ejecutar el código de benchmarking:
 
